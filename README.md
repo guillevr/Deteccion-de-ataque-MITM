@@ -12,7 +12,7 @@ Para que un ataque MITM funcione correctamente, el ciberdelincuente debe asegura
 
 ### Características principales de un ataque MITM
 
-- El ataque se realiza sobre la transmisión de tráfico o datos entre dos partes, ya sean dos usuarios, o un usuario y un prestador de servicios.
-- El atacante actúa como intermediario en la comunicación, esto es, suplanta la identidad de una de las partes (o de ambas), de forma que los datos siempre pasan por él antes de ser enviados a la otra parte.
-- Aunque la información entre ambos host viaje cifrada, el atacante la descifra antes de transmitirla a la otra parte.
+- El ataque se realiza sobre la transmisión de tráfico o datos entre dos partes, ya sean dos usuarios, o un usuario y un servidor.
+- El atacante actúa como intermediario en la comunicación, suplantando la identidad de una de las partes (o de ambas), de forma que los datos siempre pasan por él antes de ser enviados a la otra parte.
+- Aunque la información entre ambos host viaje cifrada, el ciberdelincuente puede descifrarla antes de transmitirla a la otra parte.
 - Quienes realizan la comunicación no saben que están siendo objeto de este ataque, y creen que se están comunicando entre ellos de forma normal.
