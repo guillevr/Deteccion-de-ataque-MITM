@@ -1,9 +1,9 @@
-# Deteccion-de-ataque-MITM
+# Deteccion de ataque MITM
 
-# Medidas de protección: detección de ataque MITM (ARP poisoning) con Snort
+## Medidas de protección: detección de ataque MITM (ARP poisoning) con Snort
 
 
-## ¿Qué es un ataque MIMT?
+### ¿Qué es un ataque MIMT?
 
 Un ataque Man in the Middle o ataque de intermediario es un tipo de ataque destinado a interceptar, sin autorización, la comunicación entre dos dispositivos (hosts) conectados a una red.
 
