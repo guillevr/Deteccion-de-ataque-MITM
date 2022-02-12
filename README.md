@@ -103,3 +103,26 @@ img14.jpg
 Una vez hayamos realizado el ataque, si volvemos a revisar las tablas ARP de las maquinas windows, podremos observar que la direccion MAC de la puerta de enlace ha cambiado, siendo ahora la MAC de la maquina Kali.
 img15.jpg
 img16.jpg
+
+
+## Como protegernos de los accesos no autorizados al equipo con SNORT.
+
+### ¿Que es Snort?
+SNORT es un sistema de detección de intrusos basado en red que está escrito en lenguaje de programación C. Fue desarrollado en 1998 por Martin Roesch. Ahora está desarrollado por Cisco.
+
+Es un software gratuito de código abierto. También se puede utilizar como rastreador de paquetes para monitorizar el sistema en tiempo real. El administrador de la red puede usarlo para observar todos los paquetes entrantes y encontrar los que son peligrosos para el sistema.
+
+Se basa en la herramienta de captura de paquetes de la biblioteca. Las reglas son bastante fáciles de crear e implementar y se pueden implementar en cualquier tipo de sistema operativo y cualquier tipo de entorno de red. La principal razón de la popularidad de este IDS sobre otros es que es un software de uso gratuito y también de código abierto, por lo que cualquier usuario puede usarlo de la manera que desee.
+
+Snort se basa en libpcap (para la captura de paquetes de la biblioteca), una herramienta que se utiliza ampliamente en analizadores y rastreadores de tráfico TCP / IP. A través del análisis de protocolos y la búsqueda y comparación de contenido, Snort detecta métodos de ataque, incluida la denegación de servicio, el desbordamiento del búfer, los ataques CGI, los escaneos de puertos sigilosos y las sondas SMB. Cuando se detecta un comportamiento sospechoso, Snort envía una alerta en tiempo real a syslog, un archivo de ‘alertas’ separado o a una ventana emergente.
+
+### ¿Para qué sirve y cómo funciona?
+Snort es un sistema de detección de intrusiones en la red, pero viene con tres modos de operación, todos los cuales son parte del NIDS en sí mismo. El primer modo, Sniffer Mode, muestra los paquetes que transitan por la red. Puede configurarse para mostrar varios tipos de paquetes (TCP, UDP, ICMP), así como qué mostrar de los paquetes en sí, ya sea los encabezados o los datos del paquete.
+
+El segundo modo de operación otorgado por snort es el Packet Logger Mode. Permite al usuario guardar los paquetes detectados en el modo Sniffer para guardarlos en el disco duro. A través de este modo, el usuario puede especificar reglas que indiquen qué paquetes guardar, por ejemplo, para guardar solo los paquetes relativos a una dirección específica.
+
+Finalmente, el último modo es el modo NIDS. Este modo es muy similar al registrador de paquetes, pero permite que se apliquen reglas más específicas a los paquetes, refinando los paquetes que de hecho se registran (o alertan). Las reglas aplicadas se especifican o se incluyen en el archivo de configuración que se pasa como parámetro al iniciar snort.
+
+Cabe señalar que cada uno de estos modos tiene varias opciones que se pueden configurar a través de parámetros de línea de comando o incluso archivos de configuración.
+
+Por ejemplo, con las alertas activadas en modo NIDS, puedes configurar el contenido de las alertas, dónde se almacenan las alertas, o incluso si solo deseas enviarlas a la consola, o a través de un socket UNIX a otro programa. Si bien la entrada para el NIDS se realiza normalmente con el modo Sniffer, esto se puede reemplazar con un archivo .pcap (captura de paquetes) si el rastreo no es una opción.
