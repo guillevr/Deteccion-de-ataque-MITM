@@ -165,3 +165,25 @@ action protocol source port -> destination port (options)
 Cabe señalar que, si bien la mayoría de las opciones son opcionales, el sid (Snort ID) es obligatorio y no debe entrar en conflicto con el SID de otra regla. Es el identificador único que se le da a cada regla. Snort reserva SID de 0 a 1.000.000.
 
 En las opciones de reglas, entre una larga lista de posibles indicadores que pueden usarse para detectar varios bits de datos en paquetes, los usuarios pueden incluir Expresiones regulares compatibles con Pearl a través de la opción pcre. Esto permite la detección de datos en el paquete mediante el uso de expresiones regulares, dando a las reglas más control y flexibilidad. PCRE toma el formato estándar, aunque deben escaparse las comillas dobles, el punto y coma y las barras diagonales./expression/flags
+
+
+## Instalar y configurar SNORT.
+Instalaremos SNORT en la maquina Windows 10 (Router).
+
+Para ello, podremos descargarnos e instalar el ejecutable a traves del siguiente enlace: https://www.snort.org/downloads.
+
+Previamente debemos de tener instalado npcap, el cual podremos descargar e instalar a traves del siguiente enlace: https://npcap.com/#download.
+
+Establecemos una IP fija en el equipo.
+img17.jpg
+
+Para configurar SNORT debemos de modificar el fichero **snort.conf**, el cual se encuentra en **C:\Snort\etc**
+
+Modificaciones en el fichero **snort.conf**:
+- Indicar la IP del equipo donde queremos monitorizar
+> ipvar HOME_NET 10.0.2.7
+
+- Cambiamos rutas relativas por rutas absolutas de windows y comentamos la linea **var SO_RULE_PATH**.
+> var RULE_PATH c:\snort\rules
+> # var SO_RULE_PATH ../so_rules
+> var PREPROC_RULE_PATH C:\snort\preproc_rules 
