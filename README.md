@@ -126,3 +126,42 @@ Finalmente, el último modo es el modo NIDS. Este modo es muy similar al registr
 Cabe señalar que cada uno de estos modos tiene varias opciones que se pueden configurar a través de parámetros de línea de comando o incluso archivos de configuración.
 
 Por ejemplo, con las alertas activadas en modo NIDS, puedes configurar el contenido de las alertas, dónde se almacenan las alertas, o incluso si solo deseas enviarlas a la consola, o a través de un socket UNIX a otro programa. Si bien la entrada para el NIDS se realiza normalmente con el modo Sniffer, esto se puede reemplazar con un archivo .pcap (captura de paquetes) si el rastreo no es una opción.
+
+### Características principales
+Estas son las principales características de Snort:
+
+- Monitor de tráfico en tiempo real
+- Registro de paquetes
+- Análisis de protocolo
+- Coincidencia de contenido
+- Huellas digitales del SO
+- Puede instalarse en cualquier entorno de red.
+- Crea registros
+- Fuente abierta
+- Las reglas son fáciles de implementar
+
+Snort funciona en Windows y en Linux.
+
+### Componentes de Snort
+Snort se compone de cuatro componentes principales, que encadenados permiten que cumpla con sus diversos modos.
+
+El primer componente es el decodificador, que se encarga de formar paquetes para ser utilizados por los demás componentes. Tiene la función de determinar qué protocolos subyacentes se utilizan en el paquete, así como de determinar la ubicación y el tamaño de los datos del paquete que luego se utilizan en componentes posteriores. Cabe señalar que el decodificador también busca anomalías en los encabezados, lo que puede hacer que genere alertas.
+
+Los siguientes componentes principales son los preprocesadores. Estos componentes funcionan como complementos y pueden organizar o modificar paquetes de datos. Esto permite que los servicios (como HTTP o FTP) tengan un preprocesador correspondiente para verificar anomalías específicas de ese servicio. Su trabajo es, en última instancia, intentar hacer más difícil engañar al motor de detección. Ejemplos de cómo puede hacer esto son decodificando URI’s, desfragmentando paquetes, detectando escaneo de puertos, así como también detectando anomalías en paquetes ARP, como la suplantación de ARP.
+
+El componente principal, el motor de detección, tiene la responsabilidad de detectar si existe alguna actividad de intrusión en un paquete. Para ello, encadena conjuntos de reglas, especificadas en archivos de configuración que incluyen estas reglas, y las aplica a cada paquete. Si el paquete coincide con una regla, se toma la acción especificada de esa regla o se descarta el paquete.
+
+Si un paquete coincide con una regla, el sistema de alerta y registro generará la alerta. Por supuesto, el mensaje y los contenidos generados por este componente se pueden configurar a través del archivo de configuración. Si un paquete activa varias reglas, el nivel de alerta más alto es lo que realmente generará este componente.
+
+Finalmente, después de que se genera una alerta o registro, pasa por el componente Módulos de salida. Este componente tiene la tarea de controlar el tipo de salida generada, utiliza un sistema de complementos que le da flexibilidad al usuario y también es altamente configurable. Esto puede incluir simplemente el registro en una base de datos, el envío de trampas SNMP, la generación de informes XML o incluso el envío de alertas a través de sockets UNIX, lo que permite la modificación dinámica de las configuraciones de red (firewalls o enrutadores).
+
+### Reglas Snort
+Como se mencionó anteriormente, las reglas se utilizan en todos los componentes para detectar anomalías en los paquetes. Las reglas se pueden aplicar a los encabezados de la capa de red y transporte (IP, TCP, UDP, ICMP) o incluso a los encabezados de la capa de aplicación (FTP, HTTP, etc.), pero por supuesto, las reglas también se pueden aplicar a los paquetes de datos.
+
+Las reglas se componen de dos partes, un encabezado de regla, que especifica qué acción se debe tomar en caso de una coincidencia, el tipo de paquete (TCP, UDP, etc.), así como las direcciones IP de origen y destino y los números de puerto. La última parte son las Opciones de regla, que especifica el contenido que marca los paquetes como una coincidencia, la regla general tomará la siguiente forma:
+
+action protocol source port -> destination port (options)
+
+Cabe señalar que, si bien la mayoría de las opciones son opcionales, el sid (Snort ID) es obligatorio y no debe entrar en conflicto con el SID de otra regla. Es el identificador único que se le da a cada regla. Snort reserva SID de 0 a 1.000.000.
+
+En las opciones de reglas, entre una larga lista de posibles indicadores que pueden usarse para detectar varios bits de datos en paquetes, los usuarios pueden incluir Expresiones regulares compatibles con Pearl a través de la opción pcre. Esto permite la detección de datos en el paquete mediante el uso de expresiones regulares, dando a las reglas más control y flexibilidad. PCRE toma el formato estándar, aunque deben escaparse las comillas dobles, el punto y coma y las barras diagonales./expression/flags
