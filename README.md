@@ -221,8 +221,6 @@ Activamos los de deteccion de escaneo de puertos puertos (descomentamos la linea
 
 > include $RULE_PATH\local.rules
 
->
-
 > include $RULE_PATH\app-detect.rules
 
 > include $RULE_PATH\attack-responses.rules
