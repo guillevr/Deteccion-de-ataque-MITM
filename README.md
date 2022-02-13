@@ -189,7 +189,7 @@ Modificamos el archivo de configuracion **snort.conf** el cual se encuentra en *
 Sustituimos <IP> y <MASCARA> por la IP y la MASCARA del equipo que queremos proteger.
 
 - Comprobamos que la configuracion está perfecta desde la terminal.
-> snort -T -i <interfaz> -c /etc/snort/snort.conf
+> sudo snort -T -i <interfaz> -c /etc/snort/snort.conf
 
 Si todo está perfecto, mostrara al final de la comprobacion un mensaje indicandolo.
 > Snort successfully validated the configuration!
