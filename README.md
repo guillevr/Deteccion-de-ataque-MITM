@@ -3,6 +3,7 @@
 
 https://youtu.be/BAoMqWdkUPo
 
+
 ### ¿Qué es un ataque MIMT?
 
 Un ataque **Man in the Middle** o ataque de intermediario es un tipo de ataque destinado a interceptar, sin autorización, la comunicación entre dos dispositivos (hosts) conectados a una red.
