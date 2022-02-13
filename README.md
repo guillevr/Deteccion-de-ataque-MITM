@@ -53,6 +53,7 @@ La primera maquina será Kali linux, con la cual realizaremos el ataque y las ot
 Lo primero que haremos es mirar la configuracion IP de las máquinas:
 
 **IP MAQUINA KALI**
+
 ![](img1.jpg)
 
 **IP MAQUINA WINDOWS 10 (Router)**
