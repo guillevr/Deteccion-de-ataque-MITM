@@ -82,7 +82,7 @@ Como vemos, aparecen las IPs de los equipos.
 
 Lo mas importante a tener en cuenta son los target:
 - Target 1: IP del dispositivo que queremos monitorizar.
-- Target 2: IP del dispositivo que queromos suplantar. En nuestro caso será la IP de la puerta de enlace.
+- Target 2: IP del dispositivo que queremos suplantar. En nuestro caso será la IP de la puerta de enlace.
 
 Ahora, seleccionamos los 2 equipos y lo añadimos al **Target 1**.
 ![](img9.jpg)
