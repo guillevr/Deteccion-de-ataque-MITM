@@ -197,7 +197,6 @@ Si todo está perfecto, mostrara al final de la comprobacion un mensaje indicand
 
 
 
-
 # BIBLIOGRAFIA
 https://www.redeszone.net/tutoriales/seguridad/que-es-ataque-arp-poisoning/
 https://github.com/eldondev/Snort/blob/master/doc/README.arpspoof
