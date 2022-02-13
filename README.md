@@ -167,4 +167,40 @@ Cabe señalar que, si bien la mayoría de las opciones son opcionales, el sid (S
 En las opciones de reglas, entre una larga lista de posibles indicadores que pueden usarse para detectar varios bits de datos en paquetes, los usuarios pueden incluir Expresiones regulares compatibles con Pearl a través de la opción pcre. Esto permite la detección de datos en el paquete mediante el uso de expresiones regulares, dando a las reglas más control y flexibilidad. PCRE toma el formato estándar, aunque deben escaparse las comillas dobles, el punto y coma y las barras diagonales./expression/flags
 
 
-## Instalar y configurar SNORT.
+## Instalar y configurar SNORT en Ubuntu.
+
+### Instalar SNORT
+Nos vamos a la terminal de Ubuntu e instalamos **snort**:
+> sudo apt-get install snort
+
+### Configurar SNORT
+Configuramos intervalo de direcciones para la red local. Configuramos la red en la que estamos.
+img17.jpg
+
+Modificamos el archivo de configuracion **snort.conf** el cual se encuentra en **/etc/snort**.
+
+- Indicar la red que queremos monitorizar.
+> ipvar HOME_NET 10.0.2.0/24
+
+- Configuramos reglas ARP spoof detection
+> preprocessor arpspoof: -unicast
+> preprocessor arpspoof_detect_host: <IP> <MASCARA>
+
+Sustituimos <IP> y <MASCARA> por la IP y la MASCARA del equipo que queremos proteger.
+
+- Comprobamos que la configuracion está perfecta desde la terminal.
+> snort -T -i <interfaz> -c /etc/snort/snort.conf
+
+Si todo está perfecto, mostrara al final de la comprobacion un mensaje indicandolo.
+> Snort successfully validated the configuration!
+> Snort exiting
+
+
+
+
+# BIBLIOGRAFIA
+https://www.redeszone.net/tutoriales/seguridad/que-es-ataque-arp-poisoning/
+https://github.com/eldondev/Snort/blob/master/doc/README.arpspoof
+https://thehackerway.com/2011/07/18/usando-preprocessors-en-snort-%E2%80%93-parte-vi-%E2%80%93-preprocessor-ssltls-y-arp-spoof/
+http://manual-snort-org.s3-website-us-east-1.amazonaws.com/node17.html#SECTION003215000000000000000
+https://www.youtube.com/watch?v=DP_CDjmPqI8
