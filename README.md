@@ -84,6 +84,7 @@ La herramienta **Ettercap** se encuentra en **Aplicaciones > 09 - Sniffing & Spo
 Seleccionamos **Sniffing at startup** y la interfaz primaria. En mi caso la **eth0**.
 
 Cuando estemos dentro, debemos darle a la lupa que aparece arriba a la izquierda para escanear los equipos que se encuentran en la misma red. Cuando se haya realizado el escaneo, seleccionamos el icono que se encuentra a la derecha de la lupa para que nos muestre el listado de equipos.
+
 ![](img8.jpg)
 
 Como vemos, aparecen las IPs de los equipos.
