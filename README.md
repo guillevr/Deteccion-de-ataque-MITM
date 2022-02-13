@@ -217,7 +217,7 @@ Comentamos las siguientes lineas:
 Activamos los de deteccion de escaneo de puertos puertos (descomentamos la linea):
 > preprocessor sfportscan: proto  { all } memcap { 10000000 } sense_level { low }
 
-- Sustituimos **"/"** por **"\"** en las siguientes rutas:
+- Sustituimos **"/"** por **"\\"** en las siguientes rutas:
 
 > include $RULE_PATH\local.rules
 
