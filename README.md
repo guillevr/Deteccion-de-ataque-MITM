@@ -247,6 +247,98 @@ Nos vamos a la terminal de Ubuntu, actualizamos primeramente todos los paquetes 
 
 > sudo apt-get install arpon
 
+### Configurar ArpOn
+
+Lo primero que debemos de comprobar es la tabla arp que tenemos. Para ello, ejecutamos el comando **arp -a**:
+> guillevr@guillevrMV:~$ arp -a
+> ? (10.0.2.3) en 08:00:27:63:65:1b [ether] en enp0s3
+> ? (10.0.2.15) en 08:00:27:79:8b:1e [ether] en enp0s3
+> _gateway (10.0.2.1) en 52:54:00:12:35:00 [ether] en enp0s3
+
+Copiamos la direccion IP del router y su MAC. En mi caso es:
+> 10.0.2.1 52:54:00:12:35:00
+
+Modificamos el archivo de configuracion que se encuentra en **/etc/arpon.conf** y añadimos la direccion IP del router y la MAC que hemos copiado anteriormente:
+> guillevr@guillevrMV:~$ sudo nano /etc/arpon.conf
+> [sudo] contraseña para guillevr:
+> guillevr@guillevrMV:~$
+> guillevr@guillevrMV:~$ cat /etc/arpon.conf
+> #
+> # ArpON configuration file.
+> #
+> # See the arpon(8) man page for details.
+> # Static entries matching the eth0 network interface:
+> # First static entry:
+> 10.0.2.1	52:54:00:12:35:00
+
+Ejecutamos el demonio de Arp:
+> guillevr@guillevrMV:~$ sudo arpon -d -i enp0s3 -H
+
+Podemos visualizar lo que para a traves del fichero log que se encuentra en **/var/log/arpon/arpon.log**:
+> guillevr@guillevrMV:~$ sudo tail -f /var/log/arpon/arpon.log
+> [sudo] contraseña para guillevr:
+> Mar 25 00:07:37 [INFO] Background process is running (4653).
+> Mar 25 00:07:37 [INFO] Start HARPI on enp0s3
+> Mar 25 00:07:37 [INFO] CLEAN, 10.0.2.3 was at 08:00:27:63:65:1b on enp0s3
+> Mar 25 00:07:37 [INFO] CLEAN, 10.0.2.15 was at 08:00:27:79:8b:1e on enp0s3
+> Mar 25 00:07:37 [INFO] CLEAN, 10.0.2.1 was at 52:54:00:12:35:00 on enp0s3
+> Mar 25 00:07:37 [INFO] UPDATE, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+
+Lo siguiente es irnos a la maquina Kali para realizar el ataque y comprobar que ArpOn realiza su trabajo correctamente.
+
+Si volvemos a realizar un **arp -a** para refrescar la tabla ARP, podremos observar que no ha cambiado, es mas, en la interfaz se añade un **'PERM'**.
+
+> guillevr@guillevrMV:~$ arp -a
+> ? (10.0.2.3) en 08:00:27:63:65:1b [ether] en enp0s3
+> ? (10.0.2.15) en 08:00:27:79:8b:1e [ether] en enp0s3
+> _gateway (10.0.2.1) en 52:54:00:12:35:00 [ether] PERM en enp0s3
+
+Y en el fichero log, podremos observar el trafico.
+> guillevr@guillevrMV:~$ sudo tail -f /var/log/arpon/arpon.log
+guillevr@guillevrMV:~$ sudo tail -f /var/log/arpon/arpon.log
+> [sudo] contraseña para guillevr: 
+> Mar 25 00:07:37 [INFO] Background process is running (4653).
+> Mar 25 00:07:37 [INFO] Start HARPI on enp0s3
+> Mar 25 00:07:37 [INFO] CLEAN, 10.0.2.3 was at 08:00:27:63:65:1b on enp0s3
+> Mar 25 00:07:37 [INFO] CLEAN, 10.0.2.15 was at 08:00:27:79:8b:1e on enp0s3
+> Mar 25 00:07:37 [INFO] CLEAN, 10.0.2.1 was at 52:54:00:12:35:00 on enp0s3
+> Mar 25 00:07:37 [INFO] UPDATE, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:08:18 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:08:19 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:08:21 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:08:22 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:08:23 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:08:33 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:08:41 [INFO] DENY, 10.0.2.15 was at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:08:41 [INFO] ALLOW, 10.0.2.15 is at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:08:42 [INFO] DENY, 10.0.2.15 was at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:08:42 [INFO] ALLOW, 10.0.2.15 is at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:08:43 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:08:43 [INFO] DENY, 10.0.2.15 was at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:08:43 [INFO] ALLOW, 10.0.2.15 is at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:08:53 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:08:55 [INFO] DENY, 10.0.2.15 was at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:08:55 [INFO] ALLOW, 10.0.2.15 is at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:09:01 [INFO] DENY, 10.0.2.15 was at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:09:01 [INFO] ALLOW, 10.0.2.15 is at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:09:02 [INFO] DENY, 10.0.2.15 was at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:09:02 [INFO] ALLOW, 10.0.2.15 is at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:09:03 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:09:03 [INFO] DENY, 10.0.2.15 was at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:09:03 [INFO] ALLOW, 10.0.2.15 is at 8:0:27:79:8b:1e on enp0s3
+> Mar 25 00:09:13 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:09:23 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:09:33 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:09:43 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:09:53 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:10:03 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:10:03 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:10:04 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:10:05 [INFO] REFRESH, 10.0.2.1 is at 52:54:0:12:35:0 on enp0s3
+> Mar 25 00:10:36 [INFO] ALLOW, 10.0.2.3 is at 8:0:27:63:65:1b on enp0s3
+
+
+
 
 
 
