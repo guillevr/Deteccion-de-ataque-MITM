@@ -260,16 +260,16 @@ Copiamos la direccion IP del router y su MAC. En mi caso es:
 
 Modificamos el archivo de configuracion que se encuentra en **/etc/arpon.conf** y añadimos la direccion IP del router y la MAC que hemos copiado anteriormente:
 > guillevr@guillevrMV:~$ sudo nano /etc/arpon.conf
- [sudo] contraseña para guillevr:
- guillevr@guillevrMV:~$
- guillevr@guillevrMV:~$ cat /etc/arpon.conf
- #
- # ArpON configuration file.
- #
- # See the arpon(8) man page for details.
- # Static entries matching the eth0 network interface:
- # First static entry:
- 10.0.2.1	52:54:00:12:35:00
+> [sudo] contraseña para guillevr:
+> guillevr@guillevrMV:~$
+> guillevr@guillevrMV:~$ cat /etc/arpon.conf
+> \#
+> \# ArpON configuration file.
+> \#
+> \# See the arpon(8) man page for details.
+> \# Static entries matching the eth0 network interface:
+> \# First static entry:
+> 10.0.2.1	52:54:00:12:35:00
 
 Ejecutamos el demonio de Arp:
 > guillevr@guillevrMV:~$ sudo arpon -d -i enp0s3 -H
