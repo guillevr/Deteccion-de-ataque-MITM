@@ -270,7 +270,7 @@ Modificamos el archivo de configuracion que se encuentra en **/etc/arpon.conf** 
 > \# Static entries matching the eth0 network interface:
 > \# First static entry:
 > 10.0.2.1	52:54:00:12:35:00
-
+d
 Ejecutamos el demonio de Arp:
 > guillevr@guillevrMV:~$ sudo arpon -d -i enp0s3 -H
 
