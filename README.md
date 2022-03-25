@@ -1,8 +1,8 @@
 ## Medidas de protección:
 ## Detección de ataque MITM (ARP poisoning) con Snort y ArpOn
 
-https://youtu.be/BAoMqWdkUPo
-
+Lanzar ataque MITM y prevenir con SNORT: https://youtu.be/BAoMqWdkUPo
+Lanzar ataque MITM y prevenir con ArpOn:
 
 ### ¿Qué es un ataque MIMT?
 
@@ -222,6 +222,38 @@ ArpON ( inspección del controlador ARP ) es una solución basada en host que ha
 1. SARPI ( Static ARP Inspection ) para las redes configuradas estáticamente sin DHCP;
 2. DARPI ( Inspección ARP Dinámica ) para las redes configuradas dinámicamente con DHCP;
 3. HARPI ( Inspección ARP Híbrida ) para las redes configuradas estática y dinámicamente con DHCP.
+
+### Opciones de cada una de las tecnicas.
+#### Opción de ' Inspección ARP estática ' de SARPI :
+La técnica de suplantación de ARP anti SARPI administra y establece las políticas en el caché ARP solo para todas las entradas estáticas que coincidan con la interfaz de red especificada , a fin de evitar el ataque Man In The Middle (MITM) a través del ARP suplantación de identidad, envenenamiento de caché ARP o enrutamiento de envenenamiento ARP. Por lo tanto, SARPI es una opción óptima en aquellas redes configuradas estáticamente sin DHCP. SARPI establece estas políticas :
+
+1. **CLEAN** : SARPI limpia de la memoria caché ARP solo todas las entradas que coincidan con la interfaz de red especificada, que estén presentes o no en el archivo de configuración;
+2. **ACTUALIZACIÓN** : SARPI actualiza en la memoria caché ARP solo todas las entradas estáticas que coinciden con la interfaz de red especificada, que están presentes en el archivo de configuración;
+3. **REFRESH** : SARPI actualiza en el caché ARP solo una entrada estática que coincida con la interfaz de red especificada, que está presente en el archivo de configuración;
+4. **PERMITIR** : SARPI configura en la memoria caché ARP solo una entrada dinámica que coincida con la interfaz de red especificada, que no está presente en el archivo de configuración.
+
+Por lo tanto, SARPI requiere una interfaz de red específica y la especificación en el archivo de configuración de la memoria caché ARP solo para todas las entradas estáticas que coincidan con la interfaz de red especificada.
+
+#### Opción DARPI ' Inspección dinámica de ARP ':
+La técnica de suplantación de identidad anti ARP de DARPI administra y establece las políticas en la memoria caché de ARP solo para todas las entradas dinámicas que coincidan con la interfaz de red especificada , a fin de evitar el ataque Man In The Middle (MITM) a través de ARP suplantación de identidad, envenenamiento de caché ARP o enrutamiento de envenenamiento ARP. Por lo tanto, DARPI es una opción óptima en aquellas redes configuradas dinámicamente con DHCP. DARPI establece estas políticas :
+
+1. **CLEAN** : DARPI limpia de la memoria caché ARP solo todas las entradas que coincidan con la interfaz de red especificada;
+2. **PERMITIR** : DARPI configura en la memoria caché ARP solo una entrada dinámica que coincida con la interfaz de red especificada;
+3. **DENY** : DARPI limpia del caché ARP solo una entrada dinámica que coincida con la interfaz de red especificada.
+
+Por lo tanto, DARPI requiere una interfaz de red específica y no requiere ninguna especificación en el archivo de configuración de la memoria caché ARP solo para todas las entradas dinámicas que coincidan con la interfaz de red especificada.
+
+#### Opción HARPI ' Inspección ARP híbrida ':
+La técnica de suplantación de ARP anti HARPI administra y establece las políticas en la memoria caché ARP para todas las entradas estáticas y dinámicas que coinciden con la interfaz de red especificada , a fin de evitar el ataque Man In The Middle (MITM) a través de la suplantación de identidad de ARP, el envenenamiento de caché de ARP o el enrutamiento de envenenamiento de ARP. Por lo tanto, HARPI es una opción óptima en aquellas redes configuradas estática y dinámicamente con DHCP. HARPI establece y combina estas políticas de SARPI y DARPI:
+
+1. **CLEAN** : HARPI limpia de la memoria caché ARP solo todas las entradas que coincidan con la interfaz de red especificada, que estén presentes o no en el archivo de configuración;
+2. **ACTUALIZACIÓN** : HARPI actualiza en el caché ARP solo todas las entradas estáticas que coinciden con la interfaz de red especificada, que están presentes en el archivo de configuración;
+3. **REFRESH** : HARPI actualiza en el caché ARP solo una entrada estática que coincida con la interfaz de red especificada, que está presente en el archivo de configuración;
+4. **PERMITIR** : HARPI configura en el caché ARP solo una entrada dinámica que coincida con la interfaz de red especificada, que no está presente en el archivo de configuración;
+5. **DENY** : HARPI limpia de la memoria caché ARP solo una entrada dinámica que coincida con la interfaz de red especificada, que no esté presente en el archivo de configuración.
+
+Por lo tanto, HARPI requiere una interfaz de red específica, la especificación en el archivo de configuración de la memoria caché ARP solo para todas las entradas estáticas que coincidan con la interfaz de red especificada; en cambio, no requiere ninguna especificación en el archivo de configuración del caché ARP solo para todas las entradas dinámicas que coincidan con la interfaz de red especificada.
+
 
 ### Objetivo de ArpOn
 El objetivo de ArpON es proporcionar un demonio de red seguro y eficiente que proporcione la técnica de suplantación de identidad anti ARP SARPI , DARPI y HARPI , lo que hace que el protocolo estandarizado ARP sea seguro contra cualquier intrusión externa.
